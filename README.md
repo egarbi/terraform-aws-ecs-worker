@@ -15,8 +15,7 @@ data "template_file" "container_defs" {
   vars {
     name     = "worker"
     env      = "testing"
-    memory   = "128"
-    cpu      = "1"
+    version  = "0.0.1"
   }
 }
 
@@ -26,7 +25,6 @@ module "ecs-service" {
   environment     = "testing"
   desired_count   = "1"
   cluster         = "example-cluster"
-  iam_role        = "arn:aws:iam::123203969087:role/ec2_role"
   container_definitions = "${data.template_file.container_defs.rendered}"
 }
 ```
@@ -35,9 +33,9 @@ The referenced `container_definitions.json` file contains a valid JSON document,
 [
   {
     "name": "${name}",
-    "image": "service-first",
-    "cpu": "${cpu}",
-    "memory": ${memory},
+    "image": "service-first:${version}",
+    "cpu": 1,
+    "memory": 128,
     "essential": true,
     "environment": [
       {
