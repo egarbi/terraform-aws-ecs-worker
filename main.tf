@@ -20,10 +20,6 @@ variable "desired_count" {
   default     = 2
 }
 
-variable "iam_role" {
-  description = "IAM Role ARN to use"
-}
-
 variable "policy" {
   description = "IAM custom policy to be attached to the task role"
   default = ""
@@ -71,7 +67,6 @@ resource "aws_ecs_service" "main" {
   cluster         = "${var.cluster}"
   task_definition = "${module.task.arn}"
   desired_count   = "${var.desired_count}"
-  iam_role        = "${var.iam_role}"
   
   placement_strategy {
     type = "spread"
