@@ -68,17 +68,18 @@ resource "aws_ecs_service" "main" {
   task_definition = "${module.task.arn}"
   desired_count   = "${var.desired_count}"
   
-  placement_strategy {
+  ordered_placement_strategy {
+
     type = "spread"
     field = "attribute:ecs.availability-zone"
   }
 
-  placement_strategy {
+  ordered_placement_strategy {
     type = "binpack"
     field = "cpu"
   }
 
-  placement_strategy {
+  ordered_placement_strategy {
     type = "binpack"
     field = "memory"
   }
